@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Territorio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Delivery</a> &gt; <a href="index.source.html" class="el_package">tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity</a> &gt; <span class="el_source">Territorio.java</span></div><h1>Territorio.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity;
+
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author f0rr3ly
+ */
+@Entity
+@Table(name = &quot;territorio&quot;)
+@NamedQueries({
+    @NamedQuery(name = &quot;Territorio.findAll&quot;, query = &quot;SELECT t FROM Territorio t&quot;),
+    @NamedQuery(name = &quot;Territorio.findByIdTerritorio&quot;, query = &quot;SELECT t FROM Territorio t WHERE t.idTerritorio = :idTerritorio&quot;),
+    @NamedQuery(name = &quot;Territorio.findByNombre&quot;, query = &quot;SELECT t FROM Territorio t WHERE t.nombre = :nombre&quot;),
+    @NamedQuery(name = &quot;Territorio.findByTextoVisible&quot;, query = &quot;SELECT t FROM Territorio t WHERE t.textoVisible = :textoVisible&quot;),
+    @NamedQuery(name = &quot;Territorio.findByHijosObligatorios&quot;, query = &quot;SELECT t FROM Territorio t WHERE t.hijosObligatorios = :hijosObligatorios&quot;)})
+public class Territorio implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = &quot;id_territorio&quot;)
+    private Integer idTerritorio;
+    @Column(name = &quot;nombre&quot;)
+    private String nombre;
+    @Column(name = &quot;texto_visible&quot;)
+    private String textoVisible;
+    @Column(name = &quot;hijos_obligatorios&quot;)
+    private Integer hijosObligatorios;
+    @OneToMany(mappedBy = &quot;idTerritorio&quot;)
+    private Collection&lt;Direccion&gt; direccionCollection;
+    @OneToMany(mappedBy = &quot;idTerritorioPadre&quot;)
+    private Collection&lt;Territorio&gt; territorioCollection;
+    @JoinColumn(name = &quot;id_territorio_padre&quot;, referencedColumnName = &quot;id_territorio&quot;)
+    @ManyToOne
+    private Territorio idTerritorioPadre;
+
+<span class="nc" id="L56">    public Territorio() {</span>
+<span class="nc" id="L57">    }</span>
+
+<span class="nc" id="L59">    public Territorio(Integer idTerritorio) {</span>
+<span class="nc" id="L60">        this.idTerritorio = idTerritorio;</span>
+<span class="nc" id="L61">    }</span>
+
+    public Integer getIdTerritorio() {
+<span class="nc" id="L64">        return idTerritorio;</span>
+    }
+
+    public void setIdTerritorio(Integer idTerritorio) {
+<span class="nc" id="L68">        this.idTerritorio = idTerritorio;</span>
+<span class="nc" id="L69">    }</span>
+
+    public String getNombre() {
+<span class="nc" id="L72">        return nombre;</span>
+    }
+
+    public void setNombre(String nombre) {
+<span class="nc" id="L76">        this.nombre = nombre;</span>
+<span class="nc" id="L77">    }</span>
+
+    public String getTextoVisible() {
+<span class="nc" id="L80">        return textoVisible;</span>
+    }
+
+    public void setTextoVisible(String textoVisible) {
+<span class="nc" id="L84">        this.textoVisible = textoVisible;</span>
+<span class="nc" id="L85">    }</span>
+
+    public Integer getHijosObligatorios() {
+<span class="nc" id="L88">        return hijosObligatorios;</span>
+    }
+
+    public void setHijosObligatorios(Integer hijosObligatorios) {
+<span class="nc" id="L92">        this.hijosObligatorios = hijosObligatorios;</span>
+<span class="nc" id="L93">    }</span>
+
+    public Collection&lt;Direccion&gt; getDireccionCollection() {
+<span class="nc" id="L96">        return direccionCollection;</span>
+    }
+
+    public void setDireccionCollection(Collection&lt;Direccion&gt; direccionCollection) {
+<span class="nc" id="L100">        this.direccionCollection = direccionCollection;</span>
+<span class="nc" id="L101">    }</span>
+
+    public Collection&lt;Territorio&gt; getTerritorioCollection() {
+<span class="nc" id="L104">        return territorioCollection;</span>
+    }
+
+    public void setTerritorioCollection(Collection&lt;Territorio&gt; territorioCollection) {
+<span class="nc" id="L108">        this.territorioCollection = territorioCollection;</span>
+<span class="nc" id="L109">    }</span>
+
+    public Territorio getIdTerritorioPadre() {
+<span class="nc" id="L112">        return idTerritorioPadre;</span>
+    }
+
+    public void setIdTerritorioPadre(Territorio idTerritorioPadre) {
+<span class="nc" id="L116">        this.idTerritorioPadre = idTerritorioPadre;</span>
+<span class="nc" id="L117">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L121">        int hash = 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        hash += (idTerritorio != null ? idTerritorio.hashCode() : 0);</span>
+<span class="nc" id="L123">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (!(object instanceof Territorio)) {</span>
+<span class="nc" id="L130">            return false;</span>
+        }
+<span class="nc" id="L132">        Territorio other = (Territorio) object;</span>
+<span class="nc bnc" id="L133" title="All 8 branches missed.">        if ((this.idTerritorio == null &amp;&amp; other.idTerritorio != null) || (this.idTerritorio != null &amp;&amp; !this.idTerritorio.equals(other.idTerritorio))) {</span>
+<span class="nc" id="L134">            return false;</span>
+        }
+<span class="nc" id="L136">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L141">        return &quot;tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Territorio[ idTerritorio=&quot; + idTerritorio + &quot; ]&quot;;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
