@@ -12,7 +12,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
  ********************************************************************************/
-package tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery;
+package tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.boundary;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
