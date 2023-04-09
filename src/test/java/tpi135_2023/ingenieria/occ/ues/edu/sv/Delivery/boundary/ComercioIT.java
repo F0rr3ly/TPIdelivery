@@ -29,6 +29,10 @@ import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Direccion;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Sucursal;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Territorio;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.TipoComercio;
+import java.time.Duration;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Crea un flujo de pruebas de integracion para el API de Comercios. Esto
@@ -48,34 +52,35 @@ public class ComercioIT {
     static WebTarget target;
     static Long idComercioCreado;
     static Integer idTipoCreado;
-    Network red = Network.newNetwork();
-    MountableFile war = MountableFile.forHostPath(Paths.get("target/Delivery.war").toAbsolutePath(), 0777);
+    private static Network red = Network.newNetwork();
+    private static MountableFile war = MountableFile.forHostPath(Paths.get("target/Delivery.war").toAbsolutePath(), 0777);
+
     @Container
-    GenericContainer postgres=new PostgreSQLContainer("postgres:12-alpine")
-            .withDatabaseName("delivery").withPassword("sayakamiki").withUsername("sayaka")
+    private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres")
+            .withDatabaseName("deliverydb").withUsername("postgres").withPassword("postgres")
+            .withInitScript("sql/DeliveryDDL.sql")
             .withNetwork(red)
             .withNetworkAliases("db");
-    
+
     @Container
-    GenericContainer payara = new GenericContainer("payara/full_pg:6.2023.1")
-                .withEnv("POSTGRES_USER","sayaka")
-                .withEnv("POSTGRES_PASSWORD","sayakamiki")
-                .withEnv("POSTGRES_PORT","5432")
-                .withEnv("POSTGRES_DBNAME", "delivery")
-                .withExtraHost("db","192.168.0.9")
-                .withNetwork(red)
-                .withCopyFileToContainer(war, "/home/sayaka/payara6/application.war").waitingFor(Wait.forLogMessage(".*deploy AdminCommandApplication", 1))
-                .withExposedPorts(8080);
-                
+    private static GenericContainer<?> payara = new GenericContainer("tpidelivery_app:latest")
+            .withEnv("POSTGRES_USER", "postgres")
+            .withEnv("POSTGRES_PASSWORD", "postgres")
+            .withEnv("POSTGRES_PORT", "5432")
+            .withEnv("POSTGRES_DBNAME", "deliverydb")
+            .withExtraHost("db", "192.168.0.9")
+            .withNetwork(red)
+            .withCopyFileToContainer(war, "/opt/payara6/application.war").withStartupTimeout(Duration.ofMinutes(1))
+            .withExposedPorts(8080);
 
     /**
      * Se encarga de inicializar los contenedores para realizar las pruebas
      */
     @BeforeAll
-
     public static void lanzarPayaraTest() {
         System.out.println("Comercio - lanzarPayara");
-
+        postgres.start();
+        payara.start();
         // agregue su logica de arrancar los contenedores que usara. Note que las propiedades no
         // estan agregadas a la clase, debera crearlas.
     }
@@ -299,6 +304,7 @@ public class ComercioIT {
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(s, MediaType.APPLICATION_JSON));
         Assertions.assertEquals(400, respuestaSucursal.getStatus());
+        postgres.stop();
+        payara.stop();
     }
-
 }
