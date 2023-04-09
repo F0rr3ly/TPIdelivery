@@ -1,5 +1,10 @@
 package tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.boundary;
-
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -30,9 +35,6 @@ import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Sucursal;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Territorio;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.TipoComercio;
 import java.time.Duration;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 /**
  * Crea un flujo de pruebas de integracion para el API de Comercios. Esto
@@ -80,7 +82,12 @@ public class ComercioIT {
     public static void lanzarPayaraTest() {
         System.out.println("Comercio - lanzarPayara");
         postgres.start();
-        payara.start();
+        payara.start();        
+        int port = payara.getMappedPort(8080);
+        String host = payara.getHost();
+        endpoint = String.format("https://%s:%d/app/*", host, port);
+        cliente = ClientBuilder.newClient();
+        target = cliente.target(endpoint);
         // agregue su logica de arrancar los contenedores que usara. Note que las propiedades no
         // estan agregadas a la clase, debera crearlas.
     }
