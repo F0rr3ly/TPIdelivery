@@ -20,3 +20,4 @@ services:
       DB_PASSWORD: postgres
     ports:
       - "8080:8080"
+      - "4848:4848"
