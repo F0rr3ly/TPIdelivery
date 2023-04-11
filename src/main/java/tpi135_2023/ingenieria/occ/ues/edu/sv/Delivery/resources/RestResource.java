@@ -23,8 +23,8 @@ import jakarta.ws.rs.Produces;
 public class RestResource {
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public HelloRecord hello(){
-        return new HelloRecord("Hello from Jakarta EE");
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hola(){
+        return "hola";
     }
 }
