@@ -5,20 +5,20 @@
 package tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 /**
  *
@@ -47,14 +47,14 @@ public class TipoComercio implements Serializable {
     @Column(name = "comentarios")
     private String comentarios;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoComercio")
-    private Collection<ComercioTipoComercio> comercioTipoComercioCollection;
+    private List<ComercioTipoComercio> comercioTipoComercioList;
     @OneToMany(mappedBy = "idTipoComercioPadre")
-    private Collection<TipoComercio> tipoComercioCollection;
+    private List<TipoComercio> tipoComercioList;
     @JoinColumn(name = "id_tipo_comercio_padre", referencedColumnName = "id_tipo_comercio")
     @ManyToOne
     private TipoComercio idTipoComercioPadre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoComercio")
-    private Collection<TipoProductoTipoComercio> tipoProductoTipoComercioCollection;
+    private List<TipoProductoTipoComercio> tipoProductoTipoComercioList;
 
     public TipoComercio() {
     }
@@ -95,20 +95,20 @@ public class TipoComercio implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public Collection<ComercioTipoComercio> getComercioTipoComercioCollection() {
-        return comercioTipoComercioCollection;
+    public List<ComercioTipoComercio> getComercioTipoComercioList() {
+        return comercioTipoComercioList;
     }
 
-    public void setComercioTipoComercioCollection(Collection<ComercioTipoComercio> comercioTipoComercioCollection) {
-        this.comercioTipoComercioCollection = comercioTipoComercioCollection;
+    public void setComercioTipoComercioList(List<ComercioTipoComercio> comercioTipoComercioList) {
+        this.comercioTipoComercioList = comercioTipoComercioList;
     }
 
-    public Collection<TipoComercio> getTipoComercioCollection() {
-        return tipoComercioCollection;
+    public List<TipoComercio> getTipoComercioList() {
+        return tipoComercioList;
     }
 
-    public void setTipoComercioCollection(Collection<TipoComercio> tipoComercioCollection) {
-        this.tipoComercioCollection = tipoComercioCollection;
+    public void setTipoComercioList(List<TipoComercio> tipoComercioList) {
+        this.tipoComercioList = tipoComercioList;
     }
 
     public TipoComercio getIdTipoComercioPadre() {
@@ -119,12 +119,12 @@ public class TipoComercio implements Serializable {
         this.idTipoComercioPadre = idTipoComercioPadre;
     }
 
-    public Collection<TipoProductoTipoComercio> getTipoProductoTipoComercioCollection() {
-        return tipoProductoTipoComercioCollection;
+    public List<TipoProductoTipoComercio> getTipoProductoTipoComercioList() {
+        return tipoProductoTipoComercioList;
     }
 
-    public void setTipoProductoTipoComercioCollection(Collection<TipoProductoTipoComercio> tipoProductoTipoComercioCollection) {
-        this.tipoProductoTipoComercioCollection = tipoProductoTipoComercioCollection;
+    public void setTipoProductoTipoComercioList(List<TipoProductoTipoComercio> tipoProductoTipoComercioList) {
+        this.tipoProductoTipoComercioList = tipoProductoTipoComercioList;
     }
 
     @Override
