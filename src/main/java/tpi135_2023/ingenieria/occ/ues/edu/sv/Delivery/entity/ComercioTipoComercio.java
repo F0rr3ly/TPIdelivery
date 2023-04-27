@@ -28,7 +28,9 @@ import jakarta.persistence.TemporalType;
     @NamedQuery(name = "ComercioTipoComercio.findByIdComercio", query = "SELECT c FROM ComercioTipoComercio c WHERE c.comercioTipoComercioPK.idComercio = :idComercio"),
     @NamedQuery(name = "ComercioTipoComercio.findByIdTipoComercio", query = "SELECT c FROM ComercioTipoComercio c WHERE c.comercioTipoComercioPK.idTipoComercio = :idTipoComercio"),
     @NamedQuery(name = "ComercioTipoComercio.findByActivo", query = "SELECT c FROM ComercioTipoComercio c WHERE c.activo = :activo"),
-    @NamedQuery(name = "ComercioTipoComercio.findByFechaCreacion", query = "SELECT c FROM ComercioTipoComercio c WHERE c.fechaCreacion = :fechaCreacion")})
+    @NamedQuery(name = "ComercioTipoComercio.findByFechaCreacion", query = "SELECT c FROM ComercioTipoComercio c WHERE c.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "ComercioTipoComercio.countByIdPersona", query = "SELECT count(d.comercioTipoComercioPK) FROM ComercioTipoComercio d WHERE d.comercioTipoComercioPK.idComercio = :idComercio")
+})
 public class ComercioTipoComercio implements Serializable {
 
     private static final long serialVersionUID = 1L;
