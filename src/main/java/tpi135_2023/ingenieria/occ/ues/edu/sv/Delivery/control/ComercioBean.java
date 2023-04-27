@@ -8,6 +8,7 @@ import jakarta.persistence.Query;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Comercio;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.ComercioTipoComercio;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.ComercioTipoComercioPK;
+import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Sucursal;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.TipoComercio;
 
 /**
@@ -16,9 +17,16 @@ import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.TipoComercio;
  */
 @Stateless
 public class ComercioBean {
-
     @PersistenceContext
     EntityManager em;
+    
+    public void insertarSucursal(Sucursal sucursal, long id ){
+        Comercio comercio = new Comercio(id);
+        Comercio comercioid = findcomercioById(comercio);
+        sucursal.setIdComercio(comercioid);
+        em.persist(sucursal);
+    }
+    
     public List<Comercio> ListAll(){
         return em.createNamedQuery("Comercio.findAll").getResultList();
     }

@@ -28,6 +28,7 @@ import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.boundary.RestResourcePatte
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.control.ComercioBean;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Comercio;
 import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.ComercioTipoComercio;
+import tpi135_2023.ingenieria.occ.ues.edu.sv.Delivery.entity.Sucursal;
 
 /**
  *
@@ -107,4 +108,26 @@ public class ComercioRest {
         }
         return Response.status(Response.Status.BAD_REQUEST).header(RestResourcePattern.WRONG_PARAMETER, Collections.EMPTY_LIST).build();
     }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/sucursal")
+    //esto pa probar test 7 
+    public Response insertarSucursal(@PathParam("id") int id, Sucursal sucursal, @Context UriInfo info) {
+        long idn = id;
+        Comercio nuevo = new Comercio(idn);
+        Comercio encontrado = BeanForComercio.findcomercioById(nuevo);
+        if (encontrado != null) {
+            BeanForComercio.insertarSucursal(sucursal, idn);
+            if (sucursal.getIdSucursal() != null) {
+                    UriBuilder uriBuilder = info.getAbsolutePathBuilder();
+                    uriBuilder.path(sucursal.getIdSucursal().toString());
+                    return Response.created(uriBuilder.build()).build();
+                }
+            return Response.status(Response.Status.NOT_FOUND).header(RestResourcePattern.ID_NOT_FOUND, null).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).header(RestResourcePattern.WRONG_PARAMETER, Collections.EMPTY_LIST).build();
+    }
+    
+    
 }
