@@ -80,6 +80,11 @@ public class ComercioIT {
             .withCopyFileToContainer(war, "/opt/payara/deployments/application.war")
             .waitingFor(Wait.forLogMessage(".*deploy AdminCommandApplication deployed with name application.*", 1))
             .withExposedPorts(8080);
+    
+    /*
+    linea 72, el nombre "tpidelivery_app:latest" es el nombre genérico que recibe el contenedor creado para este proyecto mediante docker compose
+    
+    */
 
     /**
      * Se encarga de inicializar los contenedores para realizar las pruebas
